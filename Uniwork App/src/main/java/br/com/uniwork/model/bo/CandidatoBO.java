@@ -41,7 +41,7 @@ public class CandidatoBO {
 			cd = new CandidatoDAO();
 			cd.update(id, cvo.getNome());
 		} catch (SQLException e) {
-			System.err.println("Impossível se conectar com o banco...");
+			System.err.println("Algo deu errado no banco de dados...");
 			e.printStackTrace();
 		}
 
@@ -52,7 +52,7 @@ public class CandidatoBO {
 			cd = new CandidatoDAO();
 			cd.delete(id);
 		} catch (SQLException e) {
-			System.err.println("Impossível se conectar com o banco...");
+			System.err.println("Algo deu errado no banco de dados...");
 			e.printStackTrace();
 		}
 	}

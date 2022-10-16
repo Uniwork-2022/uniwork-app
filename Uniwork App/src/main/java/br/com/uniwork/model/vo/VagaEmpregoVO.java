@@ -88,6 +88,18 @@ public class VagaEmpregoVO {
 		this.setBeneficios(beneficios);
 	}
 	
+	public VagaEmpregoVO(int idVaga, int idEmpresa, String nomeCargo, String descritivo, double salario, String local, String beneficios) {
+		setIdVaga(idVaga);
+		setEmpresa(idEmpresa);
+		setNomeCargo(nomeCargo);
+		setDescritivo(descritivo);
+		setSalario(salario);
+		setLocal(local);
+		setHabilidades(habilidades);
+		setStatus(true);
+		setBeneficios(beneficios);
+	}
+	
 	//Cadastro de usuários
 	public void candidatar(CandidatoVO c) {
 		this.getCandidatos().add(c);

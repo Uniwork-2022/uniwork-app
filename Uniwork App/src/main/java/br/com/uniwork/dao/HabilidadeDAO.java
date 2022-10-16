@@ -19,8 +19,8 @@ public class HabilidadeDAO {
 	}
 	
 	public void insert(HabilidadeVO hvo) throws SQLException {
-		String sql = "INSERT INTO T_UW_HABILIDADE (nm_habilidade, ds_habilidade, tp_habilidade) "
-				+ "VALUES (?,?,?,?)";
+		String sql = "INSERT INTO T_UW_HABILIDADE (id_habilidade, nm_habilidade, ds_habilidade, tp_habilidade) "
+				+ "VALUES (SQ_UW_HABILIDADE.NEXTVAL, ?,?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setString(1, hvo.getNome());
 		ps.setString(2, hvo.getDescricao());

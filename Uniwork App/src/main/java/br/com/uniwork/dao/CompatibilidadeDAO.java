@@ -24,8 +24,8 @@ public class CompatibilidadeDAO {
 	 * @throws SQLException
 	 */
 	public void insert(CompatibilidadeVO cvo) throws SQLException{
-		String sql = "INSERT INTO T_UW_COMPATIBILIDADE (id_proposta, id_username, nr_compatibilidade) "
-				+ "VALUES (?,?,?)";
+		String sql = "INSERT INTO T_UW_COMPATIBILIDADE (id_compatibilidade, id_proposta, id_username, nr_compatibilidade) "
+				+ "VALUES (SQ_UW_COMPATIBILIDADE.NEXTVAL, ?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, cvo.getIdProposta());
 		ps.setInt(2, cvo.getIdConta());

@@ -32,8 +32,8 @@ public class CurriculoDAO {
 	 */
 	public void insert(CurriculoVO cvo, CandidatoVO cdvo) throws SQLException {
 		String sql = "INSERT INTO T_UW_CURRICULO "
-				+ "(id_usuario, ds_objetivo_profissional, ds_experiencia_profissional, vl_pretencao_salarial) "
-				+ "VALUES (?, ?, ?, ?)";
+				+ "(id_curriculo, id_usuario, ds_objetivo_profissional, ds_experiencia_profissional, vl_pretencao_salarial) "
+				+ "VALUES (SQ_UW_CURRICULO.NEXTVAL, ?, ?, ?, ?)";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, cdvo.getId());
 		ps.setString(2, cvo.getObjetivoProfissional());

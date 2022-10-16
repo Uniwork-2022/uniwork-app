@@ -32,14 +32,14 @@ public class CandidatoDAO {
 	 */
 	public void insert(CandidatoVO cvo) throws SQLException {
 		String sql = "INSERT INTO T_UW_USUARIO "
-				+ "(nm_usuario, nr_rg, nr_cpf, nr_telefone, nr_idade, ds_email, fl_genero, nm_user, nm_senha) VALUES "
-				+ "(?,?,?,?,?,?,?,?,?,?)";
+				+ "(id_usuario, nm_usuario, nr_rg, nr_cpf, nr_telefone, nr_idade, ds_email, fl_genero, nm_user, nm_senha) VALUES "
+				+ "(SQ_UW_USUARIO.NEXTVAL, ?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setString(1, cvo.getNome());
 		ps.setString(2, cvo.getRg());
 		ps.setInt(3, cvo.getCpf());
-		ps.setInt(4, Integer.parseInt(cvo.getCelular()));
+		ps.setLong(4, cvo.getCelular());
 		ps.setInt(5, cvo.getIdade());
 		ps.setString(6, cvo.getEmail());
 		ps.setString(7, cvo.getGenero());
@@ -68,7 +68,7 @@ public class CandidatoDAO {
 			String nome = rs.getString("nm_usuario");
 			String rg = rs.getString("nr_rg");
 			int cpf = rs.getInt("nr_cpf");
-			int celular = rs.getInt("nr_telefone");
+			Long celular = rs.getLong("nr_telefone");
 			int idade = rs.getInt("nr_idade");
 			String email = rs.getString("ds_email");
 			String genero = rs.getString("fl_genero");
@@ -77,7 +77,7 @@ public class CandidatoDAO {
 			cvo.setNome(nome);
 			cvo.setRg(rg);
 			cvo.setCpf(cpf);
-			cvo.setCelular(Integer.toString(celular));
+			cvo.setCelular(celular);
 			cvo.setIdade(idade);
 			cvo.setEmail(email);
 			cvo.setGenero(genero);
@@ -109,7 +109,7 @@ public class CandidatoDAO {
 			String nome = rs.getString("nm_usuario");
 			String rg = rs.getString("nr_rg");
 			int cpf = rs.getInt("nr_cpf");
-			int celular = rs.getInt("nr_celular");
+			Long celular = rs.getLong("nr_celular");
 			int idade = rs.getInt("nr_idade");
 			String email = rs.getString("ds_email");
 			String genero = rs.getString("fl_genero");
@@ -117,7 +117,7 @@ public class CandidatoDAO {
 			String senha = rs.getString("ds_senha");
 			
 			
-			candidatos.add(new CandidatoVO(nome, id, login, senha, email, Integer.toString(celular), cpf, rg, idade));
+			candidatos.add(new CandidatoVO(nome, id, login, senha, email, celular, cpf, rg, idade, genero));
 			
 		}
 		ps.close();
