@@ -106,8 +106,8 @@ public class VagaEmpregoDAO {
 	
 	/**
 	 * Realiza o update de um registro na tabela
-	 * @param id
-	 * @param vevo
+	 * @param id id da Vaga
+	 * @param vevo Vaga de emprego
 	 * @throws SQLException
 	 */
 	public void update(int idVaga, VagaEmpregoVO vevo) throws SQLException {

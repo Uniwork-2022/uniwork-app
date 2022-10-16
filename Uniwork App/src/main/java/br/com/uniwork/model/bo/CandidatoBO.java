@@ -36,25 +36,29 @@ public class CandidatoBO {
 		return false;
 	}
 	
-	public void atualizar(int id, CandidatoVO cvo) {
+	public boolean atualizar(int id, CandidatoVO cvo) {
 		try {
 			cd = new CandidatoDAO();
 			cd.update(id, cvo.getNome());
+			return true;
 		} catch (SQLException e) {
 			System.err.println("Algo deu errado no banco de dados...");
 			e.printStackTrace();
 		}
+		return false;
 
 	}
 	
-	public void remover(int id) {
+	public boolean remover(int id) {
 		try {
 			cd = new CandidatoDAO();
 			cd.delete(id);
+			return true;
 		} catch (SQLException e) {
 			System.err.println("Algo deu errado no banco de dados...");
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 }

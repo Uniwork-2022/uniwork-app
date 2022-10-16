@@ -67,12 +67,11 @@ public class CompatibilidadeDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public CompatibilidadeVO select(int idProposta, int idCandidato) throws SQLException{
+	public CompatibilidadeVO select(int idCandidato) throws SQLException{
 		CompatibilidadeVO cvo = new CompatibilidadeVO();
-		String sql = "SELECT * FROM T_UW_COMPATIBILIDADE WHERE ID_PROPOSTA = (?) AND ID_USERNAME = (?)";
+		String sql = "SELECT * FROM T_UW_COMPATIBILIDADE WHERE ID_USUARIO = (?)";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, idProposta);
-		ps.setInt(2, idCandidato);
+		ps.setInt(1, idCandidato);
 		ResultSet rs = ps.executeQuery();
 		
 		while(rs.next()) {
