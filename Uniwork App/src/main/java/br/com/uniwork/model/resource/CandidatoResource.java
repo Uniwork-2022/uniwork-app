@@ -17,66 +17,69 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import br.com.uniwork.model.bo.VagaEmpregoBO;
-import br.com.uniwork.model.vo.VagaEmpregoVO;
+import br.com.uniwork.model.bo.CandidatoBO;
+import br.com.uniwork.model.bo.EmpresaBO;
+import br.com.uniwork.model.exceptions.MenorDeIdadeException;
+import br.com.uniwork.model.vo.CandidatoVO;
+import br.com.uniwork.model.vo.EmpresaVO;
 
-@Path("/vagas")
-public class VagaEmpregoResource {
-
-	VagaEmpregoBO pb = new VagaEmpregoBO();
+@Path("/candidato")
+public class CandidatoResource {
+	CandidatoBO cbo = new CandidatoBO();
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<VagaEmpregoVO> buscar() {
-		try {
-			return pb.listar();
-		} catch (SQLException e) {
-			System.out.println("Erro na operação...");
-			e.printStackTrace();
-		}
-		return null;
-	}
+	public List<CandidatoVO> buscar() {
 
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public VagaEmpregoVO buscar(@PathParam("id") int id) {
 		try {
-			return pb.listar(id);
+			return cbo.listar();
 		} catch (SQLException e) {
 			System.err.println("Erro na operação...");
 			e.printStackTrace();
 		}
+
+		return null;
+	}
+
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public CandidatoVO buscar(@PathParam("id") int id) {
+		try {
+			return cbo.listar(id);
+		} catch (SQLException e) {
+			System.err.println("Erro na operação...");
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response cadastrar(VagaEmpregoVO vaga, @Context UriInfo uriInfo) throws SQLException {
-
-		// INSERIR NA BASE
-		pb.cadastrar(1,vaga);
-
-		// CONSTRUIR O PATH DE RETORNO
+	@Consumes
+	public Response cadastrar(CandidatoVO candidato, @Context UriInfo uriInfo) {
+		try {
+			cbo.cadastrar(candidato);
+		} catch (MenorDeIdadeException e) {
+			System.err.println("Erro na operação...");
+			e.printStackTrace();
+		}
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		builder.path(Integer.toString(vaga.getEmpresa()));
-
-		// RETORNA O PATH E O STATUS 201
+		builder.path(Integer.toString(candidato.getId()));
 		return Response.created(builder.build()).build();
 	}
-
+	
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response atualizar(VagaEmpregoVO produtoU, @PathParam("{id}") int id) throws SQLException {
-		pb.atualizar(id,produtoU);
+	public Response atualizar(CandidatoVO cvo, @PathParam("{id}") int id) throws SQLException {
+		cbo.atualizar(id,cvo);
 		return Response.ok().build();
 	}
 
 	@DELETE
 	@Path("/{id}")
 	public void excluir(@PathParam("id") int id) throws SQLException {
-		pb.deletar(id);
+		cbo.deletar(id);
 	}
-
 }

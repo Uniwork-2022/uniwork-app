@@ -49,7 +49,7 @@ public class CandidatoBO {
 
 	}
 	
-	public boolean remover(int id) {
+	public boolean deletar(int id) {
 		try {
 			cd = new CandidatoDAO();
 			cd.delete(id);

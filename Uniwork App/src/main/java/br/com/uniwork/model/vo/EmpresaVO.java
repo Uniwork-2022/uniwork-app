@@ -1,8 +1,10 @@
 package br.com.uniwork.model.vo;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import br.com.uniwork.model.Conta;
 
-
+@XmlRootElement
 public class EmpresaVO extends Conta{
 	
 	/**

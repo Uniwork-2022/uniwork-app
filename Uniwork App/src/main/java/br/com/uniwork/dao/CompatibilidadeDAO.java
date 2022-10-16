@@ -38,9 +38,8 @@ public class CompatibilidadeDAO {
 	/**
 	 * GET ALL
 	 * Retorna todas as compatibilidades armazenadas no sistema
-	 * @return 
-	 * @throws SQLException
 	 * @return compatibilidades
+	 * @throws SQLException
 	 */
 	public List<CompatibilidadeVO> select() throws SQLException{
 		List<CompatibilidadeVO> compatibilidades = new ArrayList<CompatibilidadeVO>();

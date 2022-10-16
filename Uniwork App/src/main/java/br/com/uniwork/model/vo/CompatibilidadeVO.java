@@ -1,11 +1,14 @@
 package br.com.uniwork.model.vo;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Classe que calcula a compatibilidade de um candidato com uma vaga.
  * @author mateus-cabral
  * @version 1.0
  */
 
+@XmlRootElement
 public class CompatibilidadeVO {
 	
 	/**

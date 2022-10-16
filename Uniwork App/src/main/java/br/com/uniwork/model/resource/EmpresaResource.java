@@ -17,66 +17,61 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import br.com.uniwork.model.bo.VagaEmpregoBO;
-import br.com.uniwork.model.vo.VagaEmpregoVO;
+import br.com.uniwork.model.bo.EmpresaBO;
+import br.com.uniwork.model.vo.EmpresaVO;
 
-@Path("/vagas")
-public class VagaEmpregoResource {
-
-	VagaEmpregoBO pb = new VagaEmpregoBO();
+@Path("/empresa")
+public class EmpresaResource {
+	EmpresaBO ebo = new EmpresaBO();
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<VagaEmpregoVO> buscar() {
-		try {
-			return pb.listar();
-		} catch (SQLException e) {
-			System.out.println("Erro na operação...");
-			e.printStackTrace();
-		}
-		return null;
-	}
+	public List<EmpresaVO> buscar() {
 
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public VagaEmpregoVO buscar(@PathParam("id") int id) {
 		try {
-			return pb.listar(id);
+			return ebo.listar();
 		} catch (SQLException e) {
 			System.err.println("Erro na operação...");
 			e.printStackTrace();
 		}
+
+		return null;
+	}
+
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public EmpresaVO buscar(@PathParam("id") int id) {
+		try {
+			return ebo.listar(id);
+		} catch (SQLException e) {
+			System.err.println("Erro na operação...");
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response cadastrar(VagaEmpregoVO vaga, @Context UriInfo uriInfo) throws SQLException {
-
-		// INSERIR NA BASE
-		pb.cadastrar(1,vaga);
-
-		// CONSTRUIR O PATH DE RETORNO
+	@Consumes
+	public Response cadastrar(EmpresaVO empresa, @Context UriInfo uriInfo) {
+		ebo.cadastrar(empresa);
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		builder.path(Integer.toString(vaga.getEmpresa()));
-
-		// RETORNA O PATH E O STATUS 201
+		builder.path(Integer.toString(empresa.getId()));
 		return Response.created(builder.build()).build();
 	}
-
+	
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response atualizar(VagaEmpregoVO produtoU, @PathParam("{id}") int id) throws SQLException {
-		pb.atualizar(id,produtoU);
+	public Response atualizar(String novoNome, @PathParam("{id}") int id) throws SQLException {
+		ebo.atualizar(id,novoNome);
 		return Response.ok().build();
 	}
 
 	@DELETE
 	@Path("/{id}")
 	public void excluir(@PathParam("id") int id) throws SQLException {
-		pb.deletar(id);
+		ebo.deletar(id);
 	}
-
 }
