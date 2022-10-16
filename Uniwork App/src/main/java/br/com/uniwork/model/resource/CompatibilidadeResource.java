@@ -7,7 +7,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -17,20 +16,21 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import br.com.uniwork.model.bo.CandidatoBO;
-import br.com.uniwork.model.exceptions.MenorDeIdadeException;
+import br.com.uniwork.model.bo.CompatibilidadeBO;
 import br.com.uniwork.model.vo.CandidatoVO;
+import br.com.uniwork.model.vo.CompatibilidadeVO;
+import br.com.uniwork.model.vo.VagaEmpregoVO;
 
-@Path("/candidato")
-public class CandidatoResource {
-	CandidatoBO cbo = new CandidatoBO();
+@Path("/compatibilidade")
+public class CompatibilidadeResource {
+	CompatibilidadeBO cb;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CandidatoVO> buscar() {
-
+	public List<CompatibilidadeVO> buscar() {
+		cb = new CompatibilidadeBO();
 		try {
-			return cbo.listar();
+			return cb.listar();
 		} catch (SQLException e) {
 			System.err.println("Erro na operação...");
 			e.printStackTrace();
@@ -42,9 +42,10 @@ public class CandidatoResource {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public CandidatoVO buscar(@PathParam("id") int id) {
+	public CompatibilidadeVO buscar(@PathParam("id") int id) {
+		cb = new CompatibilidadeBO();
 		try {
-			return cbo.listar(id);
+			return cb.listar(id);
 		} catch (SQLException e) {
 			System.err.println("Erro na operação...");
 			e.printStackTrace();
@@ -55,29 +56,23 @@ public class CandidatoResource {
 
 	@POST
 	@Consumes
-	public Response cadastrar(CandidatoVO candidato, @Context UriInfo uriInfo) {
-		try {
-			cbo.cadastrar(candidato);
-		} catch (MenorDeIdadeException e) {
-			System.err.println("Erro na operação...");
-			e.printStackTrace();
-		}
+	public Response cadastrar(CandidatoVO candidato, VagaEmpregoVO vaga, CompatibilidadeVO cvo,
+			@Context UriInfo uriInfo) {
+		cb = new CompatibilidadeBO(candidato, vaga);
+
+		cb.cadastrar(cvo);
+
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
 		builder.path(Integer.toString(candidato.getId()));
 		return Response.created(builder.build()).build();
 	}
-	
-	@PUT
-	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response atualizar(CandidatoVO cvo, @PathParam("{id}") int id) throws SQLException {
-		cbo.atualizar(id,cvo);
-		return Response.ok().build();
-	}
+
 
 	@DELETE
-	@Path("/{id}")
-	public void excluir(@PathParam("id") int id) throws SQLException {
-		cbo.deletar(id);
+	@Path("/{idVaga}/{idCandidato}")
+	public void excluir(@PathParam("id") int idVaga, int idCandidato) throws SQLException {
+		cb = new CompatibilidadeBO();
+		cb.deletar(idVaga, idCandidato);
 	}
+
 }
