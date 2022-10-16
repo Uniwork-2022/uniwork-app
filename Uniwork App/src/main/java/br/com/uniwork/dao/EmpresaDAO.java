@@ -26,13 +26,13 @@ public class EmpresaDAO {
 	
 	public void insert(EmpresaVO e) throws SQLException {
 		String sql = "INSERT INTO T_UW_EMPRESA "
-				+ "(nm_empresa, nr_cnpj, ds_email, nr_telefone, st_empresa, ds_login, ds_senha) VALUES (?,?,?,?,?,?,?)";
+				+ "(nm_empresa, nr_cnpj, ds_email, nr_telefone, st_empresa, ds_username, ds_senha, id_empresa) VALUES (?,?,?,?,?,?,?,SQ_UW_EMPRESA.NEXTVAL)";
 		
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setString(1, e.getNome());
-		ps.setInt(2, Integer.getInteger(e.getCnpj()));
+		ps.setLong(2, e.getCnpj());
 		ps.setString(3, e.getEmail());
-		ps.setInt(4, Integer.getInteger(e.getCelular()));
+		ps.setLong(4, e.getCelular());
 		ps.setString(5, "A");
 		ps.setString(6, e.getLogin());
 		ps.setString(7, e.getPwd());
@@ -57,8 +57,8 @@ public class EmpresaDAO {
 		while(rs.next()) {
 			String status = rs.getNString("st_empresa");
 			evo.setNome(rs.getString("nm_empresa"));
-			evo.setCnpj(rs.getString("nr_cnpj"));
-			evo.setCelular(Integer.toString(rs.getInt("nr_telefone")));
+			evo.setCnpj(rs.getLong("nr_cnpj"));
+			evo.setCelular(rs.getLong("nr_telefone"));
 			evo.setEmail(rs.getString("ds_email"));
 			evo.setStatus((status == "A") ? true : false);
 		}
@@ -81,13 +81,13 @@ public class EmpresaDAO {
 		while(rs.next()) {
 			int id = rs.getInt("id_empresa");
 			String nome = rs.getString("nm_empresa");
-			String cnpj = rs.getString("nr_cnpj");
-			int celular = rs.getInt("nr_telefone");
+			Long cnpj = rs.getLong("nr_cnpj");
+			Long celular = rs.getLong("nr_telefone");
 			String email = rs.getString("ds_email");
 			String login = rs.getString("ds_login");
 			String senha = rs.getString("ds_senha");
 			String endereco = rs.getString("ds_endereco");
-			empresas.add(new EmpresaVO(nome, id, login, senha, email, Integer.toString(celular), endereco, cnpj));
+			empresas.add(new EmpresaVO(nome, id, login, senha, email, celular, endereco, cnpj));
 			
 		}
 		

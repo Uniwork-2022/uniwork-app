@@ -28,12 +28,13 @@ public class VagaEmpregoDAO {
 	 * @throws SQLException
 	 */
 	public void insert(int idEmpresa, VagaEmpregoVO vevo) throws SQLException {
-		String sql = "INSERT INTO T_UW_VAGA (id_empresa, sg_local, ds_vaga, ds_beneficios) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO T_UW_VAGA (id_vaga, id_empresa, sg_local, ds_vaga, ds_beneficios, nm_vaga) VALUES (SQ_UW_VAGA.NEXTVAL, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, idEmpresa);
 		ps.setString(2, vevo.getLocal());
 		ps.setString(3, vevo.getDescritivo());
 		ps.setString(4, vevo.getBeneficios());
+		ps.setString(5, vevo.getNomeCargo());
 		ps.executeUpdate();
 		ps.close();
 		conn.close();
@@ -58,11 +59,13 @@ public class VagaEmpregoDAO {
 			String local = rs.getString("sg_local");
 			String descricao = rs.getString("ds_vaga");
 			String beneficios = rs.getString("ds_beneficios");
+			String nome = rs.getString("nm_vaga");
 			vaga.setIdVaga(idVaga);
 			vaga.setEmpresa(idEmpresa);
 			vaga.setLocal(local);
 			vaga.setDescritivo(descricao);
 			vaga.setBeneficios(beneficios);
+			vaga.setNomeCargo(nome);
 			vagas.add(vaga);
 		}
 		return vagas;
@@ -86,11 +89,13 @@ public class VagaEmpregoDAO {
 			String local = rs.getString("sg_local");
 			String descricao = rs.getString("ds_vaga");
 			String beneficios = rs.getString("ds_beneficios");
+			String nome = rs.getString("nm_vaga");
 			vaga.setIdVaga(idVaga);
 			vaga.setEmpresa(idEmpresa);
 			vaga.setLocal(local);
 			vaga.setDescritivo(descricao);
 			vaga.setBeneficios(beneficios);
+			vaga.setNomeCargo(nome);
 		}
 		ps.close();
 		rs.close();
@@ -101,8 +106,8 @@ public class VagaEmpregoDAO {
 	
 	/**
 	 * Realiza o update de um registro na tabela
-	 * @param id
-	 * @param vevo
+	 * @param id id da Vaga
+	 * @param vevo Vaga de emprego
 	 * @throws SQLException
 	 */
 	public void update(int idVaga, VagaEmpregoVO vevo) throws SQLException {

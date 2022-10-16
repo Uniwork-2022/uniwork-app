@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.uniwork.model.factory.ConectionFactory;
-import br.com.uniwork.model.vo.CandidatoVO;
 import br.com.uniwork.model.vo.CurriculoVO;
 
 /**
@@ -26,16 +25,16 @@ public class CurriculoDAO {
 	
 	/**
 	 * Insere um novo registro na tabela
-	 * @param cvo
-	 * @param cdvo
+	 * @param cvo Curriculo do Candidato
+	 * @param idCandidato id do candidato no banco de dados
 	 * @throws SQLException
 	 */
-	public void insert(CurriculoVO cvo, CandidatoVO cdvo) throws SQLException {
+	public void insert(CurriculoVO cvo, int idCandidato) throws SQLException {
 		String sql = "INSERT INTO T_UW_CURRICULO "
-				+ "(id_usuario, ds_objetivo_profissional, ds_experiencia_profissional, vl_pretencao_salarial) "
-				+ "VALUES (?, ?, ?, ?)";
+				+ "(id_curriculo, id_usuario, ds_objetivo_profissional, ds_experiencia_profissional, vl_pretencao_salarial) "
+				+ "VALUES (SQ_UW_CURRICULO.NEXTVAL, ?, ?, ?, ?)";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, cdvo.getId());
+		ps.setInt(1, idCandidato);
 		ps.setString(2, cvo.getObjetivoProfissional());
 		ps.setString(3, cvo.getExperienciaProfissional());
 		ps.setInt(4, cvo.getPretensaoSalarial());
@@ -45,6 +44,12 @@ public class CurriculoDAO {
 		
 	}
 	
+	/**
+	 * GET ALL
+	 * Retorna todos os currículos do banco de dados
+	 * @return curriculos
+	 * @throws SQLException
+	 */
 	public List<CurriculoVO> select() throws SQLException {
 		List<CurriculoVO> curriculos = new ArrayList<CurriculoVO>();
 		String sql = "SELECT * FROM T_UW_CURRICULO";

@@ -37,7 +37,7 @@ public abstract class Conta implements SistemaLogin{
 	/**
 	 * Celular de contato
 	 */
-	private String celular;
+	private Long celular;
 	
 	/**
 	 * Se o email está verificado no sistema
@@ -70,7 +70,7 @@ public abstract class Conta implements SistemaLogin{
 	 * @param email
 	 * @param cel
 	 */
-	public Conta(String nome, int id, String login, String pwd, String email, String cel, String endereco) {
+	public Conta(String nome, int id, String login, String pwd, String email, Long cel, String endereco) {
 		this.setNome(nome);
 		this.setId(id);
 		this.setLogin(login);
@@ -82,7 +82,7 @@ public abstract class Conta implements SistemaLogin{
 		this.setEndereco(endereco);
 	}
 	
-	public Conta(String nome, int id, String login, String pwd, String email, String cel) {
+	public Conta(String nome, int id, String login, String pwd, String email, Long cel) {
 		this.setNome(nome);
 		this.setId(id);
 		this.setLogin(login);
@@ -209,12 +209,12 @@ public abstract class Conta implements SistemaLogin{
 	}
 
 
-	public String getCelular() {
+	public Long getCelular() {
 		return celular;
 	}
 
 
-	public void setCelular(String celular) {
+	public void setCelular(Long celular) {
 		this.celular = celular;
 	}
 

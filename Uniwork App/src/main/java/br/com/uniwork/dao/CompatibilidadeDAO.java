@@ -24,8 +24,8 @@ public class CompatibilidadeDAO {
 	 * @throws SQLException
 	 */
 	public void insert(CompatibilidadeVO cvo) throws SQLException{
-		String sql = "INSERT INTO T_UW_COMPATIBILIDADE (id_proposta, id_username, nr_compatibilidade) "
-				+ "VALUES (?,?,?)";
+		String sql = "INSERT INTO T_UW_COMPATIBILIDADE (id_compatibilidade, id_proposta, id_username, nr_compatibilidade) "
+				+ "VALUES (SQ_UW_COMPATIBILIDADE.NEXTVAL, ?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, cvo.getIdProposta());
 		ps.setInt(2, cvo.getIdConta());
@@ -38,9 +38,8 @@ public class CompatibilidadeDAO {
 	/**
 	 * GET ALL
 	 * Retorna todas as compatibilidades armazenadas no sistema
-	 * @return 
-	 * @throws SQLException
 	 * @return compatibilidades
+	 * @throws SQLException
 	 */
 	public List<CompatibilidadeVO> select() throws SQLException{
 		List<CompatibilidadeVO> compatibilidades = new ArrayList<CompatibilidadeVO>();
@@ -67,12 +66,11 @@ public class CompatibilidadeDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public CompatibilidadeVO select(int idProposta, int idCandidato) throws SQLException{
+	public CompatibilidadeVO select(int idCandidato) throws SQLException{
 		CompatibilidadeVO cvo = new CompatibilidadeVO();
-		String sql = "SELECT * FROM T_UW_COMPATIBILIDADE WHERE ID_PROPOSTA = (?) AND ID_USERNAME = (?)";
+		String sql = "SELECT * FROM T_UW_COMPATIBILIDADE WHERE ID_USUARIO = (?)";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, idProposta);
-		ps.setInt(2, idCandidato);
+		ps.setInt(1, idCandidato);
 		ResultSet rs = ps.executeQuery();
 		
 		while(rs.next()) {
