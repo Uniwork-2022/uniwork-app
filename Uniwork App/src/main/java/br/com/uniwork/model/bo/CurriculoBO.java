@@ -60,7 +60,19 @@ public class CurriculoBO {
 		return false;
 	}
 	
-	public boolean delete(int idUsuario) {
+	public boolean atualizar(int id, CurriculoVO cvo) {
+		try {
+			cdao = new CurriculoDAO();
+			cdao.update(id, cvo);
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Erro atualizando o o registro...");
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean deletar(int idUsuario) {
 		try {
 			cdao = new CurriculoDAO();
 			cdao.delete(idUsuario);
