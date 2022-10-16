@@ -1,7 +1,6 @@
 package br.com.uniwork.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,7 +32,7 @@ public class CandidatoDAO {
 	 */
 	public void insert(CandidatoVO cvo) throws SQLException {
 		String sql = "INSERT INTO T_UW_USUARIO "
-				+ "(nm_usuario, nr_rg, nr_cpf, nr_telefone, dt_nascimento, ds_email, fl_genero, nm_user, nm_senha) VALUES "
+				+ "(nm_usuario, nr_rg, nr_cpf, nr_telefone, nr_idade, ds_email, fl_genero, nm_user, nm_senha) VALUES "
 				+ "(?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -41,7 +40,7 @@ public class CandidatoDAO {
 		ps.setString(2, cvo.getRg());
 		ps.setInt(3, cvo.getCpf());
 		ps.setInt(4, Integer.parseInt(cvo.getCelular()));
-		ps.setDate(5, (Date) cvo.getDataNasc());
+		ps.setInt(5, cvo.getIdade());
 		ps.setString(6, cvo.getEmail());
 		ps.setString(7, cvo.getGenero());
 		ps.setString(8, cvo.getLogin());
@@ -70,7 +69,7 @@ public class CandidatoDAO {
 			String rg = rs.getString("nr_rg");
 			int cpf = rs.getInt("nr_cpf");
 			int celular = rs.getInt("nr_telefone");
-			Date dt_nascimento = rs.getDate("dt_nascimento");
+			int idade = rs.getInt("nr_idade");
 			String email = rs.getString("ds_email");
 			String genero = rs.getString("fl_genero");
 			String login = rs.getString("nm_user");
@@ -79,7 +78,7 @@ public class CandidatoDAO {
 			cvo.setRg(rg);
 			cvo.setCpf(cpf);
 			cvo.setCelular(Integer.toString(celular));
-			cvo.setDataNasc(dt_nascimento);
+			cvo.setIdade(idade);
 			cvo.setEmail(email);
 			cvo.setGenero(genero);
 			cvo.setLogin(login);
@@ -111,12 +110,14 @@ public class CandidatoDAO {
 			String rg = rs.getString("nr_rg");
 			int cpf = rs.getInt("nr_cpf");
 			int celular = rs.getInt("nr_celular");
+			int idade = rs.getInt("nr_idade");
 			String email = rs.getString("ds_email");
 			String genero = rs.getString("fl_genero");
 			String login = rs.getString("ds_username");
 			String senha = rs.getString("ds_senha");
 			
-			candidatos.add(new CandidatoVO(nome, id, login, senha, email, Integer.toString(celular), cpf, rg));
+			
+			candidatos.add(new CandidatoVO(nome, id, login, senha, email, Integer.toString(celular), cpf, rg, idade));
 			
 		}
 		ps.close();
