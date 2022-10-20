@@ -10,10 +10,10 @@ public class ConectionFactory {
 	public Connection getConn() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL", "rm93000", "290802");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL", "login", "senha");
 			return conn;
 		} catch (SQLException | ClassNotFoundException e) {
-			System.out.println("Erro de conex„o com o banco...");
+			System.out.println("Erro de conex√£o com o banco...");
 			e.printStackTrace();
 		}
 		return null;
